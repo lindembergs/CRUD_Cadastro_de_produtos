@@ -21,7 +21,7 @@ namespace Crud
       {
         Console.WriteLine("------- CONTROLE DE ESTOQUE -------");
         Console.WriteLine("Escolha uma opção: ");
-        Console.WriteLine("[1] - ADICIONAR PRODUTO\n[5] - SAIR");
+        Console.WriteLine("[1] - ADICIONAR PRODUTO\n[2] - LISTAR PRODUTOS\n[5] - SAIR");
         string? opcao = Console.ReadLine();
 
         switch (opcao)
@@ -29,6 +29,12 @@ namespace Crud
           case "1":
             Console.Clear();
             CadastrarProduto();
+            Console.WriteLine("\nAperte qualquer tecla para continuar");
+            Console.ReadKey();
+            break;
+          case "2":
+            Console.Clear();
+            ListarProdutos();
             Console.WriteLine("\nAperte qualquer tecla para continuar");
             Console.ReadKey();
             break;
@@ -100,6 +106,24 @@ namespace Crud
       Console.WriteLine($"{id,-5} {name,-20} {quantity,-10} R$ {price,8:F2}");
 
       id++;
+    }
+    public static void ListarProdutos()
+    {
+      Console.Clear();
+      if (produtos.Count < 1)
+      {
+        Console.WriteLine("Seu estoque está vazio");
+      }
+      else
+      {
+        foreach (var p in produtos)
+        {
+          Console.WriteLine($"{"ID",-4} {"NOME",-20}{"QUANT.",-10}{"PRECO",10}");
+
+        }
+      }
+
+      ;
     }
   }
 }
