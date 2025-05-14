@@ -94,7 +94,7 @@ namespace Crud
       } while (!validPrice);
 
       produtos.Add(id, (name!, quantity, price));
-
+      Console.WriteLine("Produto cadastrado com sucesso!");
       Console.WriteLine($"\n{"ID",-5} {"NOME",-20} {"QUANT.",-10} {"PREÇO",10}");
       Console.WriteLine(new string('-', 50));
       Console.WriteLine($"{id,-5} {name,-20} {quantity,-10} R$ {price,8:F2}");
