@@ -44,10 +44,8 @@ class Program
           Console.WriteLine("\nAperte qualquer tecla para continuar");
           Console.ReadKey();
           break;
-
         case "5":
           return;
-
         default:
           Console.Clear();
           Console.WriteLine("Opção inválida");
@@ -111,12 +109,11 @@ class Program
     Console.WriteLine(new string('-', 50));
     Console.WriteLine($"{id,-5} {name,-20} {quantity,-10} {"R$ " + price.ToString("F2"),12}");
 
-
     id++;
   }
+
   public static void ListarProdutos()
   {
-    // Console.Clear();
     if (produtos.Count < 1)
     {
       Console.WriteLine("Seu estoque está vazio");
@@ -130,8 +127,8 @@ class Program
         Console.WriteLine($"{p.Key,-5} {p.Value.name,-20} {p.Value.quantity,-10} {"R$ " + p.Value.price.ToString("F2"),12}");
       }
     }
-    ;
   }
+
   public static void AtualizarProduto()
   {
     if (produtos.Count < 1)
@@ -199,22 +196,41 @@ class Program
         return;
       }
     }
+
     Console.WriteLine("Atualizar o preço? S/N");
     string? editPrice = Console.ReadLine()?.ToLower();
     if (editPrice == "s")
     {
-      Console.WriteLine("DIGITE O NOVO PREÇO");
+      Console.WriteLine("DIGITE O NOVO PREÇO (ou pressione Enter para manter o atual)");
       string? priceInput = Console.ReadLine();
-      decimal newPrice;
-      decimal.TryParse(priceInput, out newPrice);
-      if (newPrice < 0)
+
+      if (!string.IsNullOrWhiteSpace(priceInput))
       {
-        Console.WriteLine("Não é possível editar com valor negativo");
-        return;
+        decimal newPrice;
+        if (decimal.TryParse(priceInput, out newPrice))
+        {
+          if (newPrice < 0)
+          {
+            Console.WriteLine("Não é possível editar com valor negativo");
+            return;
+          }
+
+          ExibirProduto(idParaAtualizar, "Produto antes da atualização:");
+          produto.price = newPrice;
+          isUpdated = true;
+        }
+        else
+        {
+          Console.WriteLine("Preço inválido.");
+          return;
+        }
       }
-      produto.price = newPrice;
-      isUpdated = true;
+      else
+      {
+        Console.WriteLine("Preço mantido.");
+      }
     }
+
     if (isUpdated)
     {
       produtos[idParaAtualizar] = (produto.name, produto.quantity, produto.price);
@@ -225,8 +241,6 @@ class Program
     {
       Console.WriteLine("Nenhuma atualização realizada.");
     }
-
-
   }
 
   public static void ExibirProduto(int id, string title)
@@ -234,7 +248,9 @@ class Program
     if (!produtos.ContainsKey(id))
     {
       Console.WriteLine($"Produto com o id {id} não existe ");
+      return;
     }
+
     var p = produtos[id];
     Console.WriteLine($"\n{title}");
     Console.WriteLine($"\n{"ID",-5} {"NOME",-20} {"QUANT.",-10} {"PREÇO",10}");
@@ -242,4 +258,3 @@ class Program
     Console.WriteLine($"{id,-5} {p.name,-20} {p.quantity,-10} {"R$ " + p.price.ToString("F2"),12}");
   }
 }
-
