@@ -103,7 +103,8 @@ namespace Crud
       Console.WriteLine("Produto cadastrado com sucesso!");
       Console.WriteLine($"\n{"ID",-5} {"NOME",-20} {"QUANT.",-10} {"PREÇO",10}");
       Console.WriteLine(new string('-', 50));
-      Console.WriteLine($"{id,-5} {name,-20} {quantity,-10} R$ {price,8:F2}");
+      Console.WriteLine($"{id,-5} {name,-20} {quantity,-10} {"R$ " + price.ToString("F2"),12}");
+
 
       id++;
     }
@@ -116,10 +117,11 @@ namespace Crud
       }
       else
       {
+        Console.WriteLine($"\n{"ID",-5} {"NOME",-20} {"QUANT.",-10} {"PREÇO",10}");
+        Console.WriteLine(new string('-', 50));
         foreach (var p in produtos)
         {
-          Console.WriteLine($"{"ID",-4} {"NOME",-20}{"QUANT.",-10}{"PRECO",10}");
-
+          Console.WriteLine($"{p.Key,-5} {p.Value.name,-20} {p.Value.quantity,-10} {"R$ " + p.Value.price.ToString("F2"),12}");
         }
       }
 
