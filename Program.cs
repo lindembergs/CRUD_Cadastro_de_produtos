@@ -21,7 +21,7 @@ class Program
     {
       Console.WriteLine("------- CONTROLE DE ESTOQUE -------");
       Console.WriteLine("Escolha uma opção: ");
-      Console.WriteLine("[1] - ADICIONAR PRODUTO\n[2] - LISTAR PRODUTOS\n[3] - ATUALIZAR PRODUTO\n[5] - SAIR");
+      Console.WriteLine("[1] - ADICIONAR PRODUTO\n[2] - LISTAR PRODUTOS\n[3] - ATUALIZAR PRODUTO\n[4] - EXCLUIR PRODUTO\n[5] - SAIR");
       string? opcao = Console.ReadLine();
 
       switch (opcao)
@@ -41,6 +41,12 @@ class Program
         case "3":
           Console.Clear();
           AtualizarProduto();
+          Console.WriteLine("\nAperte qualquer tecla para continuar");
+          Console.ReadKey();
+          break;
+        case "4":
+          Console.Clear();
+          ExcluirProduto();
           Console.WriteLine("\nAperte qualquer tecla para continuar");
           Console.ReadKey();
           break;
@@ -242,7 +248,31 @@ class Program
       Console.WriteLine("Nenhuma atualização realizada.");
     }
   }
+  public static void ExcluirProduto()
+  {
+    if (produtos.Count <= 0)
+    {
+      Console.WriteLine("Lista de produtos vazia");
+      return;
+    }
+    ListarProdutos();
+    Console.Write("DIGITE O ID DO PRODUTO PARA EXCLUIR: ");
+    string? inputDelete = Console.ReadLine();
+    int idToDelete;
+    int.TryParse(inputDelete, out idToDelete);
+    if (!produtos.ContainsKey(idToDelete))
+    {
+      Console.WriteLine("O produto com o ID " + idToDelete + " Não existe");
+    }
+    else
+    {
+      produtos.Remove(idToDelete);
+      Console.WriteLine("Produto com ID " + idToDelete + " Removido da lista!");
 
+      ListarProdutos();
+    }
+
+  }
   public static void ExibirProduto(int id, string title)
   {
     if (!produtos.ContainsKey(id))
@@ -258,3 +288,4 @@ class Program
     Console.WriteLine($"{id,-5} {p.name,-20} {p.quantity,-10} {"R$ " + p.price.ToString("F2"),12}");
   }
 }
+
